@@ -18,6 +18,26 @@ export default {
     return {
       japanese_words: 'おこそとのほもよろんえけせてねへめえれゑうくすつぬふむゆるをいきしちにひみいりゐあかさたなはまやらわ'.split('').reverse()
     }
+  },
+  methods: {
+    randomPickupNumber: function() {
+      var arr = [];
+      var numArr = [];
+      // 0から50を入れる処理
+      for(var i = 0; i < 50; i++){
+        arr[i] = i;
+      }
+      for(var j = 0, len = arr.length; j < this.selected_number; j++, len--) {
+        // 3.代入された要素数-1の値は下記のrandomでは選ばれない
+        var rndNum = Math.floor(Math.random()*len);
+        // 1.arr[n]番目の数をpush
+        numArr.push(arr[rndNum]);
+        // 2.arrの要素数-1の数字がarr[rudNum]に代入
+        arr[rndNum] = arr[len-1];
+      }
+      console.log(numArr)
+      return this.random_words = numArr
+    }
   }
 }
 </script>
