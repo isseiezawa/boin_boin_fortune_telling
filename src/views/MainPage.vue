@@ -4,11 +4,21 @@
       <ul>
         <li v-for="(japanese_word, index) in japanese_words" :key="index">
           <span class="perfect-circle">
-            <span class="circle">{{ japanese_word }} {{index}}</span>
+            <span class="circle">{{ japanese_word }}</span>
           </span>
+          <div v-if="random_words.includes(index)">ボイン</div>
         </li>
       </ul>
+      <!-- <div>{{randomPickupNumber()}}</div> -->
+      <select v-model="selected_number">
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+      </select>
     </div>
+    <button @click="randomPickupNumber()">ボイン</button>
   </div>
 </template>
 
@@ -16,7 +26,29 @@
 export default {
   data(){
     return {
-      japanese_words: 'おこそとのほもよろんえけせてねへめえれゑうくすつぬふむゆるをいきしちにひみいりゐあかさたなはまやらわ'.split('').reverse()
+      japanese_words: 'おこそとのほもよろんえけせてねへめえれゑうくすつぬふむゆるをいきしちにひみいりゐあかさたなはまやらわ'.split('').reverse(),
+      selected_number: 2,
+      random_words: []
+    }
+  },
+  methods: {
+    randomPickupNumber: function() {
+      var arr = [];
+      var numArr = [];
+      // 0から50を入れる処理
+      for(var i = 0; i < 50; i++){
+        arr[i] = i;
+      }
+      for(var j = 0, len = arr.length; j < this.selected_number; j++, len--) {
+        // 3.代入された要素数-1の値は下記のrandomでは選ばれない
+        var rndNum = Math.floor(Math.random()*len);
+        // 1.arr[n]番目の数をpush
+        numArr.push(arr[rndNum]);
+        // 2.arrの要素数-1の数字がarr[rudNum]に代入
+        arr[rndNum] = arr[len-1];
+      }
+      console.log(numArr)
+      return this.random_words = numArr
     }
   }
 }
