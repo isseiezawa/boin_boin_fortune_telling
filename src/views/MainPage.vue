@@ -4,11 +4,21 @@
       <ul>
         <li v-for="(japanese_word, index) in japanese_words" :key="index">
           <span class="perfect-circle">
-            <span class="circle">{{ japanese_word }} {{index}}</span>
+            <span class="circle">{{ japanese_word }}</span>
           </span>
+          <div v-if="random_words.includes(index)">ボイン</div>
         </li>
       </ul>
+      <!-- <div>{{randomPickupNumber()}}</div> -->
+      <select v-model="selected_number">
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+      </select>
     </div>
+    <button @click="randomPickupNumber()">ボイン</button>
   </div>
 </template>
 
@@ -16,7 +26,9 @@
 export default {
   data(){
     return {
-      japanese_words: 'おこそとのほもよろんえけせてねへめえれゑうくすつぬふむゆるをいきしちにひみいりゐあかさたなはまやらわ'.split('').reverse()
+      japanese_words: 'おこそとのほもよろんえけせてねへめえれゑうくすつぬふむゆるをいきしちにひみいりゐあかさたなはまやらわ'.split('').reverse(),
+      selected_number: 2,
+      random_words: []
     }
   },
   methods: {
