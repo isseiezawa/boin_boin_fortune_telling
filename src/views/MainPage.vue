@@ -34,6 +34,12 @@ export default {
       random_number: [],
       start_or_stop: true,
       change_loop: null,
+      loop_bgm: new Audio(require('../assets/bgm/loop_bgm.mp3'))
+    }
+  },
+  created(){
+    this.loop_bgm.loop = true;
+  },
   computed: {
     startOrStopButton() {
       return this.start_or_stop ? 'スタート' : 'ストップ';
@@ -61,18 +67,22 @@ export default {
     loopProcessing(time) {
       if(!this.change_loop) {
         this.start_or_stop = false;
+        this.loop_bgm.play();
         this.change_loop = setInterval(this.randomPickupNumber, time)
       }
     },
     slowLoop() {
       clearInterval(this.change_loop);
       this.change_loop = null;
+      this.loop_bgm.playbackRate = 0.5;
       this.loopProcessing(1000);
       // 3秒後にloop処理を止める
       setTimeout(this.stopLoop, 3.0*1000)
     },
     stopLoop() {
       this.start_or_stop = true;
+      this.loop_bgm.pause();
+      this.loop_bgm.playbackRate = 1.0;
       clearInterval(this.change_loop);
       this.change_loop = null;
     }
