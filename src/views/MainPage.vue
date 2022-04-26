@@ -17,6 +17,9 @@
         <option>5</option>
         <option>6</option>
       </select>
+      <div class="d-grid gap-2 col-6 mx-auto text-center">
+        <button @click="start_or_stop ? loopProcessing(100) : slowLoop()" class="btn btn-primary">{{ startOrStopButton }}</button>
+      </div>
     </div>
     <button @click="randomPickupNumber()">ボイン</button>
   </div>
@@ -29,6 +32,11 @@ export default {
       japanese_words: 'おこそとのほもよろんえけせてねへめえれゑうくすつぬふむゆるをいきしちにひみいりゐあかさたなはまやらわ'.split('').reverse(),
       selected_number: 2,
       random_words: []
+      start_or_stop: true,
+      change_loop: null,
+  computed: {
+    startOrStopButton() {
+      return this.start_or_stop ? 'スタート' : 'ストップ';
     }
   },
   methods: {
@@ -49,6 +57,23 @@ export default {
       }
       console.log(numArr)
       return this.random_words = numArr
+    loopProcessing(time) {
+      if(!this.change_loop) {
+        this.start_or_stop = false;
+        this.change_loop = setInterval(this.randomPickupNumber, time)
+      }
+    },
+    slowLoop() {
+      clearInterval(this.change_loop);
+      this.change_loop = null;
+      this.loopProcessing(1000);
+      // 3秒後にloop処理を止める
+      setTimeout(this.stopLoop, 3.0*1000)
+    },
+    stopLoop() {
+      this.start_or_stop = true;
+      clearInterval(this.change_loop);
+      this.change_loop = null;
     }
   }
 }
