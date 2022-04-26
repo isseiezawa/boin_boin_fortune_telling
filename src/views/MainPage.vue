@@ -2,26 +2,26 @@
   <div class="container">
     <div class="box">
       <ul>
-        <li v-for="(japanese_word, index) in japanese_words" :key="index">
+        <li v-for="(japanese_word, index) in japanese_words" :key="index" :class="random_number.includes(index) ? 'focus-boin' : ''">
           <span class="perfect-circle">
             <span class="circle">{{ japanese_word }}</span>
           </span>
-          <div v-if="random_words.includes(index)">ボイン</div>
         </li>
       </ul>
-      <!-- <div>{{randomPickupNumber()}}</div> -->
-      <select v-model="selected_number">
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-        <option>6</option>
-      </select>
+      <div class="form-group col-6 mx-auto text-center my-3">
+        <label for="boin-quantity">ボイン数選択</label>
+        <select v-model="selected_number" class="form-control text-center" id="boin-quantity">
+          <option value="2">2個</option>
+          <option value="3">3個</option>
+          <option value="4">4個</option>
+          <option value="5">5個</option>
+          <option value="6">6個</option>
+        </select>
+      </div>
       <div class="d-grid gap-2 col-6 mx-auto text-center">
         <button @click="start_or_stop ? loopProcessing(100) : slowLoop()" class="btn btn-primary">{{ startOrStopButton }}</button>
       </div>
     </div>
-    <button @click="randomPickupNumber()">ボイン</button>
   </div>
 </template>
 
@@ -40,7 +40,6 @@ export default {
     }
   },
   methods: {
-    randomPickupNumber: function() {
     randomPickupNumber() {
       var arr = [];
       var numArr = [];
@@ -86,7 +85,7 @@ ul{
   /* flexboxで等間隔に並べる*/
   display: flex;
   flex-wrap: wrap;
-  border: solid 1px;
+
   text-align: center;
   padding: 0;
   margin: 10px;
@@ -105,7 +104,7 @@ li{
   height: auto;
   position: relative;
   list-style: none;
-  font-size: 1%;
+  font-size: 40%;
   background-color: rgb(255, 249, 224);
 }
 li:before {
@@ -139,11 +138,13 @@ li span.perfect-circle:before{
   display: inline-block;
 }
 
-
 .circle {
   border: solid 3px rgb(249, 206, 213);
   border-radius: 100%;
   background-color: rgb(237, 127, 145);
 }
 
+.focus-boin {
+  background-color: crimson;
+}
 </style>
