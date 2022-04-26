@@ -31,7 +31,7 @@ export default {
     return {
       japanese_words: 'おこそとのほもよろんえけせてねへめえれゑうくすつぬふむゆるをいきしちにひみいりゐあかさたなはまやらわ'.split('').reverse(),
       selected_number: 2,
-      random_words: []
+      random_number: [],
       start_or_stop: true,
       change_loop: null,
   computed: {
@@ -41,6 +41,7 @@ export default {
   },
   methods: {
     randomPickupNumber: function() {
+    randomPickupNumber() {
       var arr = [];
       var numArr = [];
       // 0から50を入れる処理
@@ -56,7 +57,8 @@ export default {
         arr[rndNum] = arr[len-1];
       }
       console.log(numArr)
-      return this.random_words = numArr
+      return this.random_number = numArr
+    },
     loopProcessing(time) {
       if(!this.change_loop) {
         this.start_or_stop = false;
