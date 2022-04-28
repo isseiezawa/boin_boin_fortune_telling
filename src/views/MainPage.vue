@@ -52,7 +52,7 @@ export default {
     randomPickupNumber() {
       var arr = [];
       var numArr = [];
-      for(var i = 0; i < 50; i++){
+      for(var i = 0; i < this.japanese_words.length; i++){
         arr[i] = i;
       }
       for(var j = 0, len = arr.length; j < this.selected_number; j++, len--) {
