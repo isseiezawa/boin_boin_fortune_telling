@@ -22,6 +22,9 @@
         <button @click="start_or_stop ? loopProcessing(100) : slowLoop()" class="btn btn-primary">{{ startOrStopButton }}</button>
       </div>
     </div>
+    <div class="d-grid gap-2 col-6 mx-auto text-center">
+      <h2>{{result_word}}</h2>
+    </div>
   </div>
 </template>
 
@@ -32,6 +35,7 @@ export default {
       japanese_words: 'おこそとのほもよろんえけせてねへめえれゑうくすつぬふむゆるをいきしちにひみいりゐあかさたなはまやらわ'.split('').reverse(),
       selected_number: 2,
       random_number: [],
+      result_word: "",
       start_or_stop: true,
       change_loop: null,
       loop_bgm: new Audio(require('../assets/bgm/loop_bgm.mp3'))
@@ -62,7 +66,16 @@ export default {
         arr[rndNum] = arr[len-1];
       }
       console.log(numArr)
-      return this.random_number = numArr
+      this.random_number = numArr
+      this.resultWordBox()
+    },
+    resultWordBox() {
+      this.result_word = ""
+      if(this.random_number.length) {
+        for(var i = 0; i < this.selected_number; i++) {
+          this.result_word += this.japanese_words[this.random_number[i]]
+        }
+      }
     },
     loopProcessing(time) {
       if(!this.change_loop) {
