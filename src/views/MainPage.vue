@@ -1,17 +1,8 @@
 <template>
   <div class="container">
     <div class="box">
-      <RandomWordsBox :japanese_words="japanese_words" :random_number="random_number" />
-      <div class="form-group col-6 mx-auto text-center my-3">
-        <label for="boin-quantity">ボイン数選択</label>
-        <select v-model="selected_number" class="form-control text-center" id="boin-quantity">
-          <option value="2">2個</option>
-          <option value="3">3個</option>
-          <option value="4">4個</option>
-          <option value="5">5個</option>
-          <option value="6">6個</option>
-        </select>
-      </div>
+      <random-words-box :japanese_words="japanese_words" :random_number="random_number" />
+      <select-box :value="selected_number" @input="selected_number = $event" :options="select_options" />
       <div class="d-grid gap-2 col-6 mx-auto text-center">
         <button @click="start_or_stop ? loopProcessing(100) : slowLoop()" class="btn btn-primary">{{ startOrStopButton }}</button>
       </div>
@@ -24,15 +15,24 @@
 
 <script>
 import RandomWordsBox from '../components/RandomWordsBox.vue'
+import SelectBox from '../components/SelectBox.vue'
 
 export default {
   components: {
-    RandomWordsBox
+    RandomWordsBox,
+    SelectBox
   },
   data(){
     return {
       japanese_words: 'おこそとのほもよろんえけせてねへめえれゑうくすつぬふむゆるをいきしちにひみいりゐあかさたなはまやらわ'.split('').reverse(),
-      selected_number: 2,
+      selected_number: '2',
+      select_options: [
+          {text: '2個', value: '2'},
+          {text: '3個', value: '3'},
+          {text: '4個', value: '4'},
+          {text: '5個', value: '5'},
+          {text: '6個', value: '6'},
+        ],
       random_number: [],
       result_word: "",
       start_or_stop: true,
