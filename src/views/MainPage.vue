@@ -42,6 +42,7 @@ export default {
   },
   created(){
     this.loop_bgm.loop = true;
+    speechSynthesis.getVoices(); // 声の配列をあらかじめ取得
   },
   computed: {
     startOrStopButton() {
@@ -76,23 +77,33 @@ export default {
       if(!this.change_loop) {
         this.start_or_stop = false;
         this.loop_bgm.play();
-        this.change_loop = setInterval(this.randomPickupNumber, time)
+        this.change_loop = setInterval(this.randomPickupNumber, time) //  指定した時間ごとに処理を実行する内容をdataに格納
       }
     },
     slowLoop() {
       clearInterval(this.change_loop);
-      this.change_loop = null;
-      this.loop_bgm.playbackRate = 0.5;
+      this.loop_bgm.playbackRate = 0.5; // ループ時のBGMをゆっくりに
       this.loopProcessing(1000);
-      // 3秒後にloop処理を止める
-      setTimeout(this.stopLoop, 3.0*1000)
+      setTimeout(this.stopLoop, 3.0*1000) // 3秒後にloop処理を止める
     },
     stopLoop() {
+      clearInterval(this.change_loop);
+      this.change_loop = null;
       this.start_or_stop = true;
       this.loop_bgm.pause();
       this.loop_bgm.playbackRate = 1.0;
-      clearInterval(this.change_loop);
-      this.change_loop = null;
+      this.getVoice();
+    },
+    getVoice() {
+      const uttr = new SpeechSynthesisUtterance();
+      const voice = speechSynthesis.getVoices(); // 利用可能な音声のリストを格納
+      uttr.voice = voice[49]; // 声指定
+      uttr.volume = 0.5; //音量
+      uttr.rate   = 0.2; //読み上げ速度
+      uttr.pitch  = 0; //音程
+      uttr.text = this.result_word // 読み上げる内容
+      speechSynthesis.cancel(); // 発声キューの削除
+      speechSynthesis.speak(uttr); // 読み上げ
     }
   }
 }
