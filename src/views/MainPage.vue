@@ -77,23 +77,21 @@ export default {
       if(!this.change_loop) {
         this.start_or_stop = false;
         this.loop_bgm.play();
-        this.change_loop = setInterval(this.randomPickupNumber, time)
+        this.change_loop = setInterval(this.randomPickupNumber, time) //  指定した時間ごとに処理を実行する内容をdataに格納
       }
     },
     slowLoop() {
       clearInterval(this.change_loop);
-      this.change_loop = null;
-      this.loop_bgm.playbackRate = 0.5;
+      this.loop_bgm.playbackRate = 0.5; // ループ時のBGMをゆっくりに
       this.loopProcessing(1000);
-      // 3秒後にloop処理を止める
-      setTimeout(this.stopLoop, 3.0*1000)
+      setTimeout(this.stopLoop, 3.0*1000) // 3秒後にloop処理を止める
     },
     stopLoop() {
+      clearInterval(this.change_loop);
+      this.change_loop = null;
       this.start_or_stop = true;
       this.loop_bgm.pause();
       this.loop_bgm.playbackRate = 1.0;
-      clearInterval(this.change_loop);
-      this.change_loop = null;
       this.getVoice();
     },
     getVoice() {
